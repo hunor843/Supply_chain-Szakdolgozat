@@ -1,0 +1,28 @@
+name: Trivy Pipeline ellenőrzés
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Kód letöltése
+      uses: actions/checkout@v4
+
+    - name: Docker konténer felépítése
+      run: docker build -t cv2-demo:latest .
+
+    - name: Trivy biztonsági ellenőrzés
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'cv2-demo:latest'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        scanners: 'vuln,misconfig'
+        severity: 'CRITICAL,HIGH'
