@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Kód letöltése
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Docker konténer felépítése
       run: docker build -t cv2-demo:latest .
