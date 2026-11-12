@@ -33,6 +33,7 @@ jobs:
       with:
         image: "cv2-demo:latest"
         fail-build: true
+        output-format: table
         severity-cutoff: high
 
           
