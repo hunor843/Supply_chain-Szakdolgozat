@@ -27,6 +27,13 @@ jobs:
         scanners: 'vuln,misconfig'
         severity: 'CRITICAL,HIGH'
 
+    - name: Grype biztonsági ellenörzés
+      uses: anchore/scan-action@v7
+      with:
+        image: "cv2-demo:latest"
+        fail-build: true
+        severity-cutoff: high
+
           
     - name: Bejelentkezés a GitHub Container Registry-be (GHCR)
       uses: docker/login-action@v3
@@ -36,7 +43,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Konténer feltöltése
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v7
       with:
         context: .
         push: true
