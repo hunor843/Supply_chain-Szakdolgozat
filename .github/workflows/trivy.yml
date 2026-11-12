@@ -28,6 +28,7 @@ jobs:
         severity: 'CRITICAL,HIGH'
 
     - name: Grype biztonsági ellenörzés
+      if: always()
       uses: anchore/scan-action@v7
       with:
         image: "cv2-demo:latest"
