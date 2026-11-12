@@ -26,3 +26,18 @@ jobs:
         ignore-unfixed: true
         scanners: 'vuln,misconfig'
         severity: 'CRITICAL,HIGH'
+
+          
+    - name: Bejelentkezés a GitHub Container Registry-be (GHCR)
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Konténer feltöltése
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/${{ github.repository }}/cv2-demo:latest
