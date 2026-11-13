@@ -41,7 +41,7 @@ jobs:
       with:
         image: "cv2-demo:latest"
         fail-build: true
-        output-format: table
+        output-format: cyclonedx-json
         only-fixed: true
         severity-cutoff: high
         
