@@ -21,11 +21,19 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: 'cv2-demo:latest'
-        format: 'table'
+        format: 'cyclonedx'
+        output: "trivy-sbom.json" 
         exit-code: '1'
         ignore-unfixed: true
         scanners: 'vuln,misconfig'
         severity: 'CRITICAL,HIGH'
+
+    - name: Trivy sbom feltöltése artifact-ként 
+      uses: actions/upload-artifact@v7
+      if: always()
+      with:
+        name: trivy-sbom
+        path: trivy-sbom.json
 
     - name: Grype biztonsági ellenörzés
       if: always()
@@ -45,7 +53,8 @@ jobs:
           format: cyclonedx-json
           output-file: syft-sbom.json
     
-    - uses: actions/upload-artifact@v7
+    - name: Syft sbom feltöltése artifact-ként 
+      uses: actions/upload-artifact@v7
       if: always()
       with:
         name: syft-sbom
